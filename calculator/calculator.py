@@ -1,28 +1,41 @@
-guest_name = input("Enter your Name: ")
-print(f"Hi!, {guest_name}.")
-print()
-print("====Welcome to Calculator!====")
+# guest_name = input("Enter your Name: ")
+# print(f"Hi!, {guest_name}.")
+# print()
+# print("====Welcome to Calculator!====")
 
-num1 = int(input("Enter first number: "))
-num2 = int(input("Enter second number: "))
+# num1 = int(input("Enter first number: "))
+# num2 = int(input("Enter second number: "))
 
-add = num1 + num2
-subtract = num1 - num2
-multiply = num1 * num2
-power = num1 ** num2
+# add = num1 + num2
+# subtract = num1 - num2
+# multiply = num1 * num2
+# power = num1 ** num2
 
 
-print(f"\nSum of {num1} and {num2} is: {add} ")
-print(f"\nDifference of {num1} and {num2} is: {subtract} ")
-if num2 != 0:
-    print(f"\nQuotient of {num1} and {num2} is: {num1 / num2:.2f} ")
-else:
-    print("Can`t be divided by Zero!")
+# print(f"\nSum of {num1} and {num2} is: {add} ")
+# print(f"\nDifference of {num1} and {num2} is: {subtract} ")
+# if num2 != 0:
+#     print(f"\nQuotient of {num1} and {num2} is: {num1 / num2:.2f} ")
+# else:
+#     print("Can`t be divided by Zero!")
 
-print(f"\nProduct of {num1} and {num2} is: {multiply} ")
-print(f"\nPower of {num1} and {num2} is: {power} ")
-if num2 != 0:
-    print(f"\nRemainder of {num1} and {num2} is: {num1 % num2:.2f} ")
-else:
-    print("Can`t be divided by Zero!")
+# print(f"\nProduct of {num1} and {num2} is: {multiply} ")
+# print(f"\nPower of {num1} and {num2} is: {power} ")
+# if num2 != 0:
+#     print(f"\nRemainder of {num1} and {num2} is: {num1 % num2:.2f} ")
+# else:
+#     print("Can`t be divided by Zero!")
 
+from calculator_function import calculate
+
+def main(name):
+    print(f"\nHi!, {name}")
+    print("\n== Welcome to Calculator ==")
+
+
+name = input("What is your name?: ")
+main(name)
+operator = input("Choose Operator ['+','-','*','/','**','%']: ")
+num1 = input("Your First number: ")
+num2 = input("Your Second number: ")
+print(calculate(num1,num2,operator))
