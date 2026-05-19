@@ -28,14 +28,35 @@
 
 from calculator_function import calculate
 
+def get_number(prompt):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Must be a number!")
+            
 def main(name):
-    print(f"\nHi!, {name}")
-    print("\n== Welcome to Calculator ==")
-
-
+    print(f"\nHi, {name}")
+    print("=== Welcome to Calculator ===")
+    
+    operators = ['+','-','*','/','**','%',]
+    
+    while True:
+        operator = input("\nChoose Operator ['+','-','*','/','**','%']: ")
+        if operator not in operators:
+            print("Invalid Operator")
+            continue
+        
+        num1 = get_number("First Number: ")
+        num2 = get_number("Second Number: ")
+        
+        print(calculate(num1,num2,operator))
+        
+        again = input("\nCalculate again? (yes/no): ").lower()
+        if again != 'yes':
+            print("Goodbye!")
+            break
+        
 name = input("What is your name?: ")
 main(name)
-operator = input("Choose Operator ['+','-','*','/','**','%']: ")
-num1 = input("Your First number: ")
-num2 = input("Your Second number: ")
-print(calculate(num1,num2,operator))
+            
