@@ -16,7 +16,16 @@ def add_task(tasks, task):
 def delete_task(tasks,index):
     """Delete Tast"""
     if 1 <= index <= len(tasks):
-        removed = tasks.remove(index-1)
+        removed = tasks.pop(index - 1)
         print(f"Deleted: '{removed}'")
     else:
         print('Invalid task number')
+        
+def mark_as_done(tasks,completed, index):
+    """Mark as Done"""
+    if 1 <= index <= len(tasks):
+        done = tasks.pop(index - 1)
+        completed.append(done)
+        print(f"  Marked as done: '{done}'")
+    else:
+        print("Invalid task number")
