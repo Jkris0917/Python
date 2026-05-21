@@ -1,54 +1,48 @@
-from todo_func import add_task,show_task,delete_task,mark_as_done
+from todo_func import ToDoList
 
-def main():
-    tasks =[]
-    completed = []
-    print("== To Do List App ==")
+todo = ToDoList()
+todo.load()
+print("\n=== To do List App ===")
+
+while True:
+    print("[1] - Show [2] - Add [3] - Done [4] - Delete [5] - Summary [6] - Exit ")
+    choose = input('Choose: ')
+    if not choose.isdigit():
+        print("Must be a number")
+        continue
+    choose = int(choose)
     
-    while True:
-        
-        print("\n[1] - Show\n[2] - Add\n[3] - Mark Done\n[4] - Delete\n[5] - Quit")
-    
-        choose = input("Choose: ")
-        if not choose.isdigit():
-            print("Must be a number!")
+    if choose == 1:
+        todo.show()
+    elif choose == 2:
+        title = input("  Task: ").strip()
+        if not title:
+            print("  Title cannot be blank.")
             continue
-        choose = int(choose)
-        
-        if choose == 1:
-            show_task(tasks)
-            
-        elif choose == 2:
-            task = input("Enter task: ")
-            if not task.strip():
-                print("Blank not allowed!")
-                return
-            add_task(tasks,task)
-            
-        elif choose == 3:
-            show_task(tasks)
-            try:
-                index = int(input("  Mark task #: "))
-                mark_as_done(tasks, completed, index)
-            except ValueError:
-                print("  Enter a number.")
-                
-        elif choose == 4:
-            show_task(tasks)
-            try:
-                n = input("Delete task #: ")
-                n = int(n)
-                delete_task(tasks,n)
-            except ValueError:
-                print('Enter a number')
-                
-        elif choose == 5:
-            print("\nGoodbye!")
-            print("\n-- Completed --")
-            for i, task in enumerate(completed, start=1):
-                print(f"  {i}. {task}")
-            print("\n-- Pending --")
-            for i, task in enumerate(tasks, start=1):
-                print(f"  {i}. {task}")
-            break
-main()
+        todo.add(title)
+        todo.save()
+        todo.save_logs(f"Added: {title}")
+    elif choose == 3:
+        todo.show()
+        index = input("  Mark done #: ")
+        if not index.isdigit():
+            print("  Must be a number.")
+            continue
+        todo.mark_as_done(int(index))
+        todo.save()
+        todo.save_logs(f"Marked done: task #{index}")
+        todo.mark_as_done(index)
+    elif choose == 4:
+        todo.show()
+        index = input(" Index: ")
+        if not index.isdigit():
+            print("Must be a number")
+            continue
+        todo.delete(int(index))
+        todo.save()
+        todo.save_logs(f"Deleted: Task #{index}")
+    elif choose == 5:
+        print(f"  Pending: {len(todo.pending())} | Done: {len(todo.completed())}")
+    elif choose == 6:
+        print(" Good Bye! ")
+        break
