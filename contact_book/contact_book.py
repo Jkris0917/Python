@@ -1,49 +1,61 @@
-from contact_func import show_contacts,add_contacts,update_contacts,search_contact,delete_contacts
+from contact_func import (
+    show_contacts, add_contacts, update_contacts,
+    search_contact, delete_contacts,
+    load_contacts, save_contacts, save_logs
+)
 
 def main():
-    contacts = {}
-    print("==Contact Book==")
-    
-    
+    contacts = load_contacts()
+    print("== Contact Book ==")
+
     while True:
-        print("""[1] - Show All\n[2] - Add\n[3] - Update\n[4] - Search\n[5] - Delete\n[6] - Quit""")
+        print("\n[1] Show  [2] Add  [3] Update  [4] Search  [5] Delete  [6] Quit")
         choose = input("Choose: ")
+
         if not choose.isdigit():
-            print("Must be a number")
+            print("  Must be a number.")
             continue
         choose = int(choose)
-        
+
         if choose == 1:
             show_contacts(contacts)
-            
+
         elif choose == 2:
-            name = input("Enter Name: ").lower() 
-            phone = input("Enter Phone: ")  
-            email = input("Enter Email: ")
-            add_contacts(contacts,name,phone,email)
-            
+            name  = input("  Name: ").lower().strip()
+            phone = input("  Phone: ").strip()
+            email = input("  Email: ").strip()
+            if not name:
+                print("  Name cannot be blank.")
+                continue
+            add_contacts(contacts, name, phone, email)
+            save_contacts(contacts)                        
+            save_logs(f"Added: {name}")
+
         elif choose == 3:
             show_contacts(contacts)
-            print("Select Name of Contact you want to update")
-            try:
-                name = input("Enter Name: ").lower()
-                if name == '':
-                    print('Provide name')
-                phone = input("Enter Phone:")
-                email = input("Enter Email: ")
-                update_contacts(contacts,name,phone,email)
-            except ValueError:
-                print("Invalid!")
-        
+            name  = input("  Name to update: ").lower().strip()
+            if not name:
+                print("  Name cannot be blank.")
+                continue
+            print("  (Press Enter to keep existing value)")
+            phone = input("  New phone: ")
+            email = input("  New email: ")
+            update_contacts(contacts, name, phone, email)
+            save_contacts(contacts)                        
+            save_logs(f"Updated: {name}")
+
         elif choose == 4:
-            name = input("Enter Name: ").lower()
+            name = input("  Search name: ").lower().strip()
             search_contact(contacts, name)
-        
+
         elif choose == 5:
-            name = input("Enter Name: ").lower()
+            name = input("  Delete name: ").lower().strip()
             delete_contacts(contacts, name)
-        
+            save_contacts(contacts)                        
+            save_logs(f"Deleted: {name}")
+
         elif choose == 6:
             print("Goodbye!")
             break
+
 main()
